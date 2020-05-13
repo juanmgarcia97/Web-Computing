@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.edu.icesi.fi.tics.tssc.Taller3PersistenceApplication;
+import co.edu.icesi.fi.tics.tssc.Taller4RESTfulApplication;
 import co.edu.icesi.fi.tics.tssc.daos.ITsscTopicDao;
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
 

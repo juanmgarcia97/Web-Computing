@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
-import co.edu.icesi.fi.tics.tssc.Taller3PersistenceApplication;
+import co.edu.icesi.fi.tics.tssc.Taller4RESTfulApplication;
 import co.edu.icesi.fi.tics.tssc.daos.ITsscGameDao;
 import co.edu.icesi.fi.tics.tssc.daos.ITsscStoryDao;
 import co.edu.icesi.fi.tics.tssc.daos.ITsscTimecontrolDao;

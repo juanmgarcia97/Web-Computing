@@ -13,7 +13,7 @@ import co.edu.icesi.fi.tics.tssc.repository.TsscAdminRepository;
 import co.edu.icesi.fi.tics.tssc.service.TsscAdminService;
 
 @SpringBootApplication
-public class Taller3PersistenceApplication {
+public class Taller4RESTfulApplication {
 
 	@Bean
 	public Java8TimeDialect java8TimeDialect() {
@@ -21,7 +21,7 @@ public class Taller3PersistenceApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Taller3PersistenceApplication.class, args);
+		SpringApplication.run(Taller4RESTfulApplication.class, args);
 	}
 
 	@Bean
