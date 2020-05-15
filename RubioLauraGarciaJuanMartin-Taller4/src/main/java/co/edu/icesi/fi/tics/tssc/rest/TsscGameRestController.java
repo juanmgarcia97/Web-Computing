@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
@@ -46,17 +47,28 @@ public class TsscGameRestController {
 		}
 	}
 	
+	@RequestMapping(value = "api/games", method = RequestMethod.PUT)
 	public TsscGame editGame(@RequestBody TsscGame game) {
 //		Todavia no se si es necesario este método
-		return null;
+		try {
+			return gameService.editGame(game);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
-	@RequestMapping(value = "api/games/stories")
+	@RequestMapping(value = "api/games/stories", method = RequestMethod.GET)
 	public Iterable<TsscStory> getStories(@RequestBody TsscGame game) {
 		return gameService.getStories(game);
 	}
 	
-	@RequestMapping(value = "api/games/{id}")
+	@RequestMapping(value = "api/games/topics", method = RequestMethod.GET)
+	public Iterable<TsscTopic> getTopics(@RequestBody TsscTopic topic) {
+		return topicService.findAll();
+	}
+	
+	@RequestMapping(value = "api/games/{id}", method = RequestMethod.DELETE)
 	public void deleteGame(@PathVariable ("id") long id) {
 		TsscGame game = gameService.findById(id).get();
 		gameService.delete(game);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.edu.icesi.fi.tics.tssc.delegate.TsscGameDelegate;
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
@@ -26,20 +27,20 @@ import co.edu.icesi.fi.tics.tssc.validations.TsscTopicValidation;
 @Controller
 public class TsscGameController {
 
-	TsscGameService gameService;
+	TsscGameDelegate gameDelegate;
 
 	TsscTopicService topicService;
 
 	@Autowired
-	public TsscGameController(TsscGameService gameService, TsscTopicService topicService) {
-		this.gameService = gameService;
+	public TsscGameController(TsscGameDelegate gameDelegate, TsscTopicService topicService) {
+		this.gameDelegate = gameDelegate;
 		this.topicService = topicService;
 		;
 	}
 
 	@GetMapping("/games/")
 	public String indexGame(Model model) {
-		model.addAttribute("games", gameService.findAll());
+		model.addAttribute("games", gameDelegate.findAll());
 		return "/games/index";
 	}
 
@@ -61,9 +62,9 @@ public class TsscGameController {
 				try {
 					TsscTopic topic = game.getTsscTopic();
 					if (topic == null) {
-						gameService.saveGame(game);
+						gameDelegate.saveGame(game);
 					} else {
-						gameService.saveGameTopic(game, topic);
+//						gameDelegate.saveGameTopic(game, topic);
 					}
 
 				} catch (Exception e) {
@@ -78,10 +79,10 @@ public class TsscGameController {
 
 	@GetMapping("/games/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Optional<TsscGame> game = gameService.findById(id);
+		TsscGame game = gameDelegate.findById((int) id);
 		if (game == null)
 			throw new IllegalArgumentException("Invalid game Id:" + id);
-		model.addAttribute("tsscGame", game.get());
+		model.addAttribute("tsscGame", game);
 		model.addAttribute("topics", topicService.findAll());
 		return "games/update-game";
 	}
@@ -97,9 +98,9 @@ public class TsscGameController {
 				try {
 					TsscTopic topic = game.getTsscTopic();
 					if (topic == null) {
-						gameService.saveGame(game);
+						gameDelegate.saveGame(game);
 					} else {
-						gameService.saveGame2(game, topic);
+//						gameDelegate.saveGame2(game, topic);
 					}
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -113,21 +114,21 @@ public class TsscGameController {
 	
 	@GetMapping("/games/stories/{id}")
 	public String getStories(@PathVariable("id") long id, Model model) {
-		Optional<TsscGame> game = gameService.findById(id);
+		TsscGame game = gameDelegate.findById((int) id);
 		if (game == null)
 			throw new IllegalArgumentException("Invalid game Id:" + id);
-		List<TsscStory> stories = gameService.getStories(game.get());
+		List<TsscStory> stories = (List<TsscStory>) gameDelegate.getStories();
 		
-		model.addAttribute("tsscGame", game.get());
+		model.addAttribute("tsscGame", game);
 		model.addAttribute("stories", stories);
 		return "games/stories";
 	}
 
 	@GetMapping("/games/del/{id}")
 	public String deleteGame(@PathVariable("id") long id) {
-		TsscGame game = gameService.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid game Id:" + id));
-		gameService.delete(game);
+		TsscGame game = gameDelegate.findById((int)id);
+//				.orElseThrow(() -> new IllegalArgumentException("Invalid game Id:" + id));
+		gameDelegate.delete(game);
 		return "redirect:/games/";
 	}
 }

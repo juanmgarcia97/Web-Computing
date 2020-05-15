@@ -32,8 +32,7 @@ public class Taller4RESTfulApplication {
 			admin1.setPassword("{noop}123");
 			admin1.setSuperAdmin("superAdmin");  
 			adminRepository.save(admin1); 
-//			TsscAdmin finded = adminRepository.findByUsername(admin1.getUsername());
-//			System.out.println(finded.getUsername() + " " + finded.getPassword());
+			
 			TsscAdmin admin2 = new TsscAdmin();
 			admin2.setUsername("user2");
 			admin2.setPassword("{noop}123");
