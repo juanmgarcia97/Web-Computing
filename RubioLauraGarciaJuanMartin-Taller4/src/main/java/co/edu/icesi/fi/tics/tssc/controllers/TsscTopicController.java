@@ -1,9 +1,5 @@
 package co.edu.icesi.fi.tics.tssc.controllers;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,24 +10,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
-import co.edu.icesi.fi.tics.tssc.service.TsscTopicService;
+import co.edu.icesi.fi.tics.tssc.delegate.TsscTopicDelegate;
 import co.edu.icesi.fi.tics.tssc.validations.TsscTopicValidation;
 
 @Controller
 public class TsscTopicController {
 
-	TsscTopicService topicService;
+	TsscTopicDelegate topicDelegate;
 
 	@Autowired
-	public TsscTopicController(TsscTopicService topicService) {
-		this.topicService = topicService;
+	public TsscTopicController(TsscTopicDelegate topicDelegate) {
+		this.topicDelegate = topicDelegate;
 	}
 
 	@GetMapping("/topics/")
 	public String indexTopic(Model model) {
-		model.addAttribute("topics", topicService.findAll());
+		model.addAttribute("topics", topicDelegate.findAll());
 		return "/topics/index";
 	}
 
@@ -50,7 +45,7 @@ public class TsscTopicController {
 				return "topics/add-topic";
 			} else {
 				try {
-					topicService.saveTopic(topic);
+					topicDelegate.saveTopic(topic);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,10 +58,10 @@ public class TsscTopicController {
 
 	@GetMapping("/topics/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Optional<TsscTopic> topic = topicService.findById(id);
+		TsscTopic topic = topicDelegate.findById(id);
 		if (topic == null)
 			throw new IllegalArgumentException("Invalid topic Id:" + id);
-		model.addAttribute("tsscTopic", topic.get());
+		model.addAttribute("tsscTopic", topic);
 		return "/topics/update-topic";
 	}
 
@@ -79,7 +74,7 @@ public class TsscTopicController {
 				return "/topics/update-topic";
 			} else {
 				try {
-					topicService.saveTopic(topic);
+					topicDelegate.saveTopic(topic);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -92,9 +87,8 @@ public class TsscTopicController {
 
 	@GetMapping("/topics/del/{id}")
 	public String deleteTopic(@PathVariable("id") long id) {
-		TsscTopic topic = topicService.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid game Id:" + id));
-		topicService.delete(topic);
+		TsscTopic topic = topicDelegate.findById(id);
+		topicDelegate.delete(topic.getId());
 		return "redirect:/topics/";
 	}
 

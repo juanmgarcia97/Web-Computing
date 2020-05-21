@@ -31,6 +31,11 @@ public class TsscGameRestController {
 	public Iterable<TsscGame> getGames() {
 		return gameService.findAll();
 	}
+	
+	@RequestMapping(value = "api/games/{id}", method = RequestMethod.GET)
+	public TsscGame findById(@PathVariable("id") long id) {
+		return gameService.findById(id).get();
+	}
 
 	@RequestMapping(value = "api/games", method = RequestMethod.POST)
 	public TsscGame saveGame(@RequestBody TsscGame game) {
@@ -47,7 +52,7 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@RequestMapping(value = "api/games", method = RequestMethod.PUT)
+	@RequestMapping(value = "api/games", method = RequestMethod.PATCH)
 	public TsscGame editGame(@RequestBody TsscGame game) {
 //		Todavia no se si es necesario este método
 		try {
