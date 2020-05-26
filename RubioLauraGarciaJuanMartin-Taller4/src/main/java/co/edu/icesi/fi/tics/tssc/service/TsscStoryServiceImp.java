@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
@@ -22,6 +23,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	}
 	
 	@Override
+	@Transactional
 	public TsscStory saveStory(TsscStory newStory) throws Exception {
 		if (newStory == null) {
 			throw new Exception("Story does not exists");
@@ -38,6 +40,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	}
 	
 	@Override
+	@Transactional
 	public TsscStory saveStoryGame(TsscStory newStory, TsscGame game) throws Exception {
 		if (newStory == null) {
 			throw new Exception("Story does not exists");
@@ -59,6 +62,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	}
 
 	@Override
+	@Transactional
 	public TsscStory editStory(TsscStory newStory) throws Exception {
 		TsscStory story = storyRepository.findById(newStory.getId()).get();
 		if (story == null) {
@@ -76,6 +80,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	}
 	
 	@Override
+	@Transactional
 	public TsscStory editStoryGame(TsscStory newStory, TsscGame game) throws Exception {
 		TsscStory story = storyRepository.findById(newStory.getId()).get();
 		if (story == null) {
@@ -110,6 +115,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	}
 
 	@Override
+	@Transactional
 	public void delete(TsscStory story) {
 		// TODO Auto-generated method stub
 		storyRepository.delete(story);

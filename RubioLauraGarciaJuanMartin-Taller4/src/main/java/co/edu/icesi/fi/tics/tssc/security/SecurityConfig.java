@@ -40,9 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-		httpSecurity.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
+		httpSecurity.csrf().disable().formLogin().loginPage("/login").permitAll().and().authorizeRequests()
         .antMatchers("/**").permitAll()
-        .antMatchers("/api/**").permitAll()
+        .antMatchers("/api/**").permitAll().and().authorizeRequests()
 		.antMatchers("/games/**", "/stories/**").hasAnyRole("admin", "superAdmin")
 		.antMatchers("/topics/**").hasRole("superAdmin")
 		.anyRequest().authenticated().and().httpBasic().and().logout().invalidateHttpSession(true)

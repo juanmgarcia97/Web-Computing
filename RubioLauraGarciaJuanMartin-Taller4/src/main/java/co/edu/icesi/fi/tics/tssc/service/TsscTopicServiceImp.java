@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
 import co.edu.icesi.fi.tics.tssc.repository.TsscTopicRepository;
@@ -18,6 +19,7 @@ public class TsscTopicServiceImp implements TsscTopicService {
 	}
 
 	@Override
+	@Transactional
 	public TsscTopic saveTopic(TsscTopic newTopic) throws Exception {
 		if (newTopic == null) {
 			throw new Exception("Topic does not exists");
@@ -32,6 +34,7 @@ public class TsscTopicServiceImp implements TsscTopicService {
 	}
 
 	@Override
+	@Transactional
 	public TsscTopic editTopic(TsscTopic newTopic) throws Exception {
 		TsscTopic finded = topicRepository.findById(newTopic.getId()).get();
 		if(finded == null) {
@@ -59,6 +62,7 @@ public class TsscTopicServiceImp implements TsscTopicService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(TsscTopic topic) {
 		// TODO Auto-generated method stub
 		topicRepository.delete(topic);

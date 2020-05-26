@@ -27,17 +27,17 @@ public class TsscGameRestController {
 		this.topicService = topicService;
 	}
 
-	@RequestMapping(value = "api/games", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/games/", method = RequestMethod.GET)
 	public Iterable<TsscGame> getGames() {
 		return gameService.findAll();
 	}
 	
-	@RequestMapping(value = "api/games/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/games/{id}", method = RequestMethod.GET)
 	public TsscGame findById(@PathVariable("id") long id) {
 		return gameService.findById(id).get();
 	}
 
-	@RequestMapping(value = "api/games", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/games/", method = RequestMethod.POST)
 	public TsscGame saveGame(@RequestBody TsscGame game) {
 		TsscTopic topic = game.getTsscTopic();
 		try {
@@ -52,7 +52,7 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@RequestMapping(value = "api/games", method = RequestMethod.PATCH)
+	@RequestMapping(value = "api/games/", method = RequestMethod.PATCH)
 	public TsscGame editGame(@RequestBody TsscGame game) {
 //		Todavia no se si es necesario este método
 		try {
@@ -63,17 +63,17 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@RequestMapping(value = "api/games/stories", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/games/stories", method = RequestMethod.GET)
 	public Iterable<TsscStory> getStories(@RequestBody TsscGame game) {
 		return gameService.getStories(game);
 	}
 	
-	@RequestMapping(value = "api/games/topics", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/games/topics", method = RequestMethod.GET)
 	public Iterable<TsscTopic> getTopics(@RequestBody TsscTopic topic) {
 		return topicService.findAll();
 	}
 	
-	@RequestMapping(value = "api/games/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/games/{id}", method = RequestMethod.DELETE)
 	public void deleteGame(@PathVariable ("id") long id) {
 		TsscGame game = gameService.findById(id).get();
 		gameService.delete(game);

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
@@ -26,6 +27,7 @@ public class TsscGameServiceImp implements TsscGameService {
 	}
 
 	@Override
+	@Transactional
 	public TsscGame saveGame(TsscGame newGame) throws Exception {
 		if (newGame == null) {
 			throw new Exception("Game does not exists");
@@ -40,6 +42,7 @@ public class TsscGameServiceImp implements TsscGameService {
 	}
 	
 	@Override
+	@Transactional
 	public TsscGame saveGameTopic(TsscGame newGame, TsscTopic topic) throws Exception {
 		if (newGame == null) {
 			throw new Exception("Game does not exists");
@@ -57,6 +60,7 @@ public class TsscGameServiceImp implements TsscGameService {
 	}
 
 	@Override
+	@Transactional
 	public TsscGame editGame(TsscGame newGame) throws Exception {
 		TsscGame game = gameRepository.findById(newGame.getId()).get();
 		if (game == null) {
@@ -72,6 +76,7 @@ public class TsscGameServiceImp implements TsscGameService {
 	}
 
 	@Override
+	@Transactional
 	public TsscGame saveGame2(TsscGame newGame, TsscTopic topic) throws Exception {
 		if (newGame == null) {
 			throw new Exception("Game does not exists");
@@ -113,6 +118,7 @@ public class TsscGameServiceImp implements TsscGameService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(TsscGame game) {
 		// TODO Auto-generated method stub
 		gameRepository.delete(game);

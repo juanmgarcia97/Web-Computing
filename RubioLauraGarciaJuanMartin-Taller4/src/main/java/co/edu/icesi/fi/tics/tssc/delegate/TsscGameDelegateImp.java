@@ -36,7 +36,7 @@ public class TsscGameDelegateImp implements TsscGameDelegate{
 	
 	@Override
 	public TsscGame saveGame(TsscGame tsscGame) {
-		TsscGame game = rest.postForEntity(URI + "api/games", tsscGame, TsscGame.class).getBody();
+		TsscGame game = rest.postForEntity(URI + "api/games/", tsscGame, TsscGame.class).getBody();
 		return game;
 	}
 	
@@ -53,13 +53,13 @@ public class TsscGameDelegateImp implements TsscGameDelegate{
 
 	@Override
 	public TsscGame editGame(TsscGame tsscGame) {
-		TsscGame game = rest.patchForObject(URI + "api/games", tsscGame, TsscGame.class);
+		TsscGame game = rest.patchForObject(URI + "api/games/", tsscGame, TsscGame.class);
 		return game;
 	}
 
 	@Override
 	public Iterable<TsscStory> getStories() {
-		TsscStory[] stories = rest.getForObject(URI + "api/games/stories", TsscStory[].class);
+		TsscStory[] stories = rest.getForObject(URI + "api/games/stories/", TsscStory[].class);
 		List<TsscStory> sts;
 		try {
 			sts = Arrays.asList(stories);
@@ -72,7 +72,7 @@ public class TsscGameDelegateImp implements TsscGameDelegate{
 
 	@Override
 	public Iterable<TsscTopic> getTopics() {
-		TsscTopic[] topics = rest.getForObject(URI + "api/games/topics", TsscTopic[].class);
+		TsscTopic[] topics = rest.getForObject(URI + "api/games/topics/", TsscTopic[].class);
 		List<TsscTopic> tps;
 		try {
 			tps = Arrays.asList(topics);

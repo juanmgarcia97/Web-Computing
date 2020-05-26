@@ -19,33 +19,30 @@ public class TsscTopicDelegateImp implements TsscTopicDelegate{
 	}
 
 	@Override
-	public void saveTopic(TsscTopic entity) {
-		TsscTopic topic = rest.postForEntity(URI + "api/topic", entity, TsscTopic.class).getBody();
-
-		if (topic == null) {
-			// hacer algo
-		}
+	public TsscTopic saveTopic(TsscTopic entity) {
+		TsscTopic topic = rest.postForEntity(URI + "api/topics/", entity, TsscTopic.class).getBody();
+		return topic;
 	}
 
 	@Override
 	public TsscTopic findById(long id) {
-		TsscTopic topic = rest.getForObject(URI + "api/topic/" + id, TsscTopic.class);
+		TsscTopic topic = rest.getForObject(URI + "api/topics/" + id, TsscTopic.class);
 		return topic;
 	}
 
 	@Override
 	public void delete(long id) {
-		rest.delete(URI + "api/topic" + id);
+		rest.delete(URI + "api/topics/" + id);
 	}
 
 	@Override
 	public void editTopic(TsscTopic entity) {
-		rest.patchForObject(URI + "api/topic", entity, TsscTopic.class);
+		rest.patchForObject(URI + "api/topics/", entity, TsscTopic.class);
 	}
 
 	@Override
 	public Iterable<TsscTopic> findAll() {
-		TsscTopic[] topics = rest.getForObject(URI + "api/topic", TsscTopic[].class);
+		TsscTopic[] topics = rest.getForObject(URI + "api/topics/", TsscTopic[].class);
 		List<TsscTopic> to = Arrays.asList(topics);
 		return to;
 

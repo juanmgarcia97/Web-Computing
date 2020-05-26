@@ -19,12 +19,12 @@ public class TsscTopicRestController {
 	@Autowired
 	private TsscTopicService topicService;
 	
-	@RequestMapping(value ="/api/topic/{id}", method = RequestMethod.GET)
+	@RequestMapping(value ="/api/topics/{id}", method = RequestMethod.GET)
 	public TsscTopic findById(@PathVariable("id")long id) {
 		return topicService.findById(id).get();
 	}
 	
-	@RequestMapping(value ="/api/topic", method = RequestMethod.POST)
+	@RequestMapping(value ="/api/topics/", method = RequestMethod.POST)
 	public TsscTopic save(@RequestBody TsscTopic topic) {
 		
 		try {
@@ -37,14 +37,14 @@ public class TsscTopicRestController {
 		
 	}
 	
-	@RequestMapping(value ="/api/topic/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value ="/api/topics/{id}", method = RequestMethod.DELETE)
 	public void delete (@PathVariable( "id") long id) {
 		TsscTopic topic = topicService.findById(id).get();
 		topicService.delete(topic);
 	}
 	
-	@RequestMapping(value ="api/topic", method = RequestMethod.PUT)
-	public TsscTopic update( @RequestBody TsscTopic topic) {
+	@RequestMapping(value ="api/topics/", method = RequestMethod.PATCH)
+	public TsscTopic update(@RequestBody TsscTopic topic) {
 		try {
 			return topicService.editTopic(topic);
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class TsscTopicRestController {
 		}
 	}
 	
-	@RequestMapping(value ="/api/topic", method = RequestMethod.GET)
+	@RequestMapping(value ="/api/topics/", method = RequestMethod.GET)
 	public Iterable<TsscTopic> findAll(){
 		return topicService.findAll();
 	}
