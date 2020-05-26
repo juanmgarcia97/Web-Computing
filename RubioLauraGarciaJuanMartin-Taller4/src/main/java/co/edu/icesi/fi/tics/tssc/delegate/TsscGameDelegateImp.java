@@ -24,14 +24,8 @@ public class TsscGameDelegateImp implements TsscGameDelegate{
 	@Override
 	public Iterable<TsscGame> findAll() {
 		TsscGame[] games = rest.getForObject(URI + "api/games/", TsscGame[].class);
-		List<TsscGame> gms;
-		try {
-			gms = Arrays.asList(games);
-			return gms;
-		} catch (Exception e) {
-//			e.printStackTrace();
-			return null;
-		}
+		List<TsscGame> gms = Arrays.asList(games);
+		return gms;
 	}
 	
 	@Override
@@ -60,26 +54,14 @@ public class TsscGameDelegateImp implements TsscGameDelegate{
 	@Override
 	public Iterable<TsscStory> getStories() {
 		TsscStory[] stories = rest.getForObject(URI + "api/games/stories/", TsscStory[].class);
-		List<TsscStory> sts;
-		try {
-			sts = Arrays.asList(stories);
-			return sts;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		List<TsscStory> sts = Arrays.asList(stories);
+		return sts;
 	}
 
 	@Override
 	public Iterable<TsscTopic> getTopics() {
 		TsscTopic[] topics = rest.getForObject(URI + "api/games/topics/", TsscTopic[].class);
-		List<TsscTopic> tps;
-		try {
-			tps = Arrays.asList(topics);
-			return tps;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		List<TsscTopic> tps = Arrays.asList(topics);
+		return tps;
 	}
 }

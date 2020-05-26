@@ -43,7 +43,7 @@ public class TsscTopicRestController {
 		topicService.delete(topic);
 	}
 	
-	@RequestMapping(value ="api/topics/", method = RequestMethod.PATCH)
+	@RequestMapping(value ="/api/topics/", method = RequestMethod.PATCH)
 	public TsscTopic update(@RequestBody TsscTopic topic) {
 		try {
 			return topicService.editTopic(topic);

@@ -48,7 +48,7 @@ public class TsscGameController {
 	public String addGame(Model model) {
 		model.addAttribute("tsscGame", new TsscGame());
 		model.addAttribute("topics", topicService.findAll());
-		return "games/add-game";
+		return "/games/add-game";
 	}
 
 	@PostMapping("/games/add")
@@ -98,7 +98,7 @@ public class TsscGameController {
 				try {
 					TsscTopic topic = game.getTsscTopic();
 					if (topic == null) {
-						gameDelegate.saveGame(game);
+						gameDelegate.editGame(game);
 					} else {
 //						gameDelegate.saveGame2(game, topic);
 					}

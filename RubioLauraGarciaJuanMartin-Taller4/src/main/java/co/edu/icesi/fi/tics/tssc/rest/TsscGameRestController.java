@@ -52,7 +52,7 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@RequestMapping(value = "api/games/", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/api/games/", method = RequestMethod.PATCH)
 	public TsscGame editGame(@RequestBody TsscGame game) {
 //		Todavia no se si es necesario este método
 		try {

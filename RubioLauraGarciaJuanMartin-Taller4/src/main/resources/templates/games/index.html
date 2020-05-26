@@ -46,10 +46,10 @@
 									class="btn btn-primary"><i class="fas fa-puzzle-piece"></i></a></td>
 								<td><a th:href="@{/games/del/{id}(id=${game.id})}"
 									class="btn btn-primary"><i class="fas fa-trash"></i></a></td>
-								<td><span th:if=${!game.tsscStories.isEmpty()}><a
+								<td><span th:if=${game.tsscStories!=null}><a
 										th:href="@{/games/stories/{id}(id=${game.id})}"
 										class="btn btn-primary"><i class="fas fa-database"></i></a></span> <span
-									th:if=${game.tsscStories.isEmpty()}></span></td>
+									th:if=${game.tsscStories==null}></span></td>
 								<td sec:authorize="hasRole('superAdmin')"><span th:if=${game.tsscTopic!=null}><a
 										th:href="@{/topics/edit/{id}(id=${game.tsscTopic.id})}"
 										class="btn btn-primary"><i class="fas fa-book"></i></a></span> <span
