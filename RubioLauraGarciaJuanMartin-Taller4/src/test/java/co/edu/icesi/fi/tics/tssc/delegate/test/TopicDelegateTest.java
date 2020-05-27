@@ -103,7 +103,7 @@ class TopicDelegateTest {
 		
 	}
 	
-	
+	@Test
 	public void deleteTest() {
 		
 		setUp2();		
@@ -111,7 +111,6 @@ class TopicDelegateTest {
 		Mockito.doNothing().when(delegate).delete(topic.getId());	
 		
 		
-		verify(delegate,times(1)).delete(topic.getId());
 		
 		Mockito.when(rest.getForObject("http://localhost:8080/api/topics/0",TsscTopic.class))
 		.thenReturn(new ResponseEntity<TsscTopic>(topic, HttpStatus.OK).getBody());		
