@@ -43,7 +43,9 @@ public class TsscTopicDelegateImp implements TsscTopicDelegate{
 	@Override
 	public Iterable<TsscTopic> findAll() {
 		TsscTopic[] topics = rest.getForObject(URI + "api/topics/", TsscTopic[].class);
+		
 		List<TsscTopic> to = Arrays.asList(topics);
+		
 		return to;
 
 	}

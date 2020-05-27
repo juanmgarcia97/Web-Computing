@@ -1,6 +1,10 @@
 package co.edu.icesi.fi.tics.tssc.delegate.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +31,7 @@ class TopicDelegateTest {
 	TsscTopicDelegateImp delegate;
 	
 	TsscTopic topic;
+	TsscTopic topic2;
 	@BeforeEach
 	void initiMocks(){
 		MockitoAnnotations.initMocks(this);
@@ -55,7 +60,7 @@ class TopicDelegateTest {
 		topic.setDefaultSprints(10);
 		topic.setName("Topic1");
 		
-		TsscTopic topic2 = new TsscTopic();
+		 topic2 = new TsscTopic();
 		topic2.setDefaultGroups(10);
 		topic2.setDefaultSprints(10);
 		topic2.setName("Topic2");
@@ -100,16 +105,19 @@ class TopicDelegateTest {
 	
 	
 	public void deleteTest() {
-		//PENDIENTE
-		setUp2();
-		//rest.delete("http://localhost:8080/api/topics/0");
-	//	Mockito.doNothing().when(rest.delete("http://localhost:8080/api/topics/"));
+		//REVISAR
+		setUp2();		
+		 delegate = mock(TsscTopicDelegateImp.class);
+		Mockito.doNothing().when(delegate).delete(topic.getId());	
 		
 		
+		verify(delegate,times(1)).delete(topic.getId());
 		
+		Mockito.when(rest.getForObject("http://localhost:8080/api/topics/0",TsscTopic.class))
+		.thenReturn(new ResponseEntity<TsscTopic>(topic, HttpStatus.OK).getBody());		
 		
-		//verify(delegate,times(1)).delete(topic.getId());
-		
+		TsscTopic saved = delegate.findById(0);
+		assertNull(saved);
 	}
 	
 	@Test
@@ -134,22 +142,26 @@ class TopicDelegateTest {
 	
 	@Test
 	public void findAllTest() {
-		//PENDIENTE
+	
 		
 		setUp3();
 		
+		TsscTopic[] topics = {topic,topic2};
 		
 		Mockito.when(rest.getForObject("http://localhost:8080/api/topics/",TsscTopic[].class))
-		.thenReturn(new ResponseEntity<TsscTopic[]>(HttpStatus.OK).getBody());
+		.thenReturn(new ResponseEntity<TsscTopic[]>(topics ,HttpStatus.OK).getBody());		
+		
+		Iterable <TsscTopic> temas = delegate.findAll();		
+		String names ="";
+		
+		for (TsscTopic t: temas) {
+			names+= t.getName()+" ";
+			
+		}	
+		
+		assertTrue(names.equals("Topic1 Topic2 "));
 		
 		
-		//then(new ResponseEntity<TsscTopic>(HttpStatus.OK));	
-		 Iterable<TsscTopic> topics = delegate.findAll();
-		
-//		TsscTopic topic = topics.iterator().next();
-//		assertEquals(topic.getName(), "Topic1");
-//		topic = topics.iterator().next();
-//		assertEquals(topic.getName(), "Topic2");
 		
 	}
 	
