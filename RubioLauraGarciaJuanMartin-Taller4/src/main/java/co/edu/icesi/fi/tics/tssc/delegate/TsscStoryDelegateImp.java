@@ -34,7 +34,7 @@ public final static String URI = "http://localhost:8080/";
 	
 	@Override
 	public TsscStory saveStory(TsscStory tsscStory) {
-		TsscStory story = rest.postForEntity(URI + "api/stories", tsscStory, TsscStory.class).getBody();
+		TsscStory story = rest.postForEntity(URI + "api/stories/", tsscStory, TsscStory.class).getBody();
 		return story;
 	}
 	
