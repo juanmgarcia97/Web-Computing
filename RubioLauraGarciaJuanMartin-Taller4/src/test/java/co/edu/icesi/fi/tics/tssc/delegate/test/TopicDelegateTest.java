@@ -105,7 +105,7 @@ class TopicDelegateTest {
 	
 	
 	public void deleteTest() {
-		//REVISAR
+		
 		setUp2();		
 		 delegate = mock(TsscTopicDelegateImp.class);
 		Mockito.doNothing().when(delegate).delete(topic.getId());	
