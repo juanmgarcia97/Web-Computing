@@ -11,7 +11,7 @@ public interface ITsscGameDao {
 	public void save(TsscGame entity);
 	public void update(TsscGame entity);
 	public void delete(TsscGame entity);
-//	public List<TsscGame> findAll();
+	public List<TsscGame> findAll();
 	public List<TsscGame> findByName(String name);
 	public List<TsscGame> findByTopicDescription(String description);
 	public List<TsscGame> findByTopicId(String id);

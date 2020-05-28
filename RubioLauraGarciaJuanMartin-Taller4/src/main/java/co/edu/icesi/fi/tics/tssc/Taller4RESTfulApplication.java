@@ -33,7 +33,7 @@ public class Taller4RESTfulApplication {
 	}
 
 	@Bean
-	public CommandLineRunner command(TsscAdminRepository adminRepository, TsscTopicService topicService, TsscGameService gameService) {
+	public CommandLineRunner command(TsscAdminRepository adminRepository) {
 		return (args) -> {
 			TsscAdmin admin1 = new TsscAdmin();
 			admin1.setUsername("user1");
@@ -47,23 +47,27 @@ public class Taller4RESTfulApplication {
 			admin2.setSuperAdmin("admin");
 			adminRepository.save(admin2);
 			
-			TsscTopic t1 = new TsscTopic();
-			t1.setDefaultGroups(1);
-			t1.setDefaultSprints(1);
-			t1.setDescription("sdcs");
-			t1.setGroupPrefix("dcscd");
-			topicService.saveTopic(t1);
-			
-			TsscGame g1 = new TsscGame();
-			g1.setAdminPassword("123");
-			g1.setGuestPassword("123");
-			g1.setName("jueguito1");
-			g1.setNGroups(4);
-			g1.setNSprints(4);
-			g1.setScheduledDate(LocalDate.now());
-			g1.setScheduledTime(LocalTime.now());
-			g1.setTsscTopic(t1);
-			gameService.saveGame(g1);
+//			TsscTopic t1 = new TsscTopic();
+//			t1.setId(1);
+//			t1.setName("El tema");
+//			t1.setDefaultGroups(1);
+//			t1.setDefaultSprints(1);
+//			t1.setDescription("sdcs");
+//			t1.setGroupPrefix("dcscd");
+//			topicService.saveTopic(t1);
+//			
+//			TsscGame g1 = new TsscGame();
+//			g1.setId(1);
+//			g1.setName("El juego");
+//			g1.setAdminPassword("123");
+//			g1.setGuestPassword("123");
+//			g1.setName("jueguito1");
+//			g1.setNGroups(4);
+//			g1.setNSprints(4);
+//			g1.setScheduledDate(LocalDate.now());
+//			g1.setScheduledTime(LocalTime.now());
+//			g1.setTsscTopic(t1);
+//			gameService.saveGame(g1);
 		};
 	}
 

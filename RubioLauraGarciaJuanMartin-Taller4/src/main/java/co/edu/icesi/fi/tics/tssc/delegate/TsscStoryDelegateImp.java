@@ -21,7 +21,7 @@ public final static String URI = "http://localhost:8080/";
 	
 	@Override
 	public Iterable<TsscStory> findAll() {
-		TsscStory[] stories = rest.getForObject(URI + "api/stories", TsscStory[].class);
+		TsscStory[] stories = rest.getForObject(URI + "api/stories/", TsscStory[].class);
 		List<TsscStory> sts;
 		try {
 			sts = Arrays.asList(stories);
@@ -39,7 +39,7 @@ public final static String URI = "http://localhost:8080/";
 	}
 	
 	@Override
-	public TsscStory findById(int id) {
+	public TsscStory findById(long id) {
 		TsscStory story = rest.getForObject(URI + "api/stories/" + id, TsscStory.class);
 		return story;
 	}
@@ -51,8 +51,8 @@ public final static String URI = "http://localhost:8080/";
 
 	@Override
 	public TsscStory editStory(TsscStory tsscStory) {
-		TsscStory story = rest.patchForObject(URI + "api/stories", tsscStory, TsscStory.class);
-		return story;
+		rest.put(URI + "api/stories/", tsscStory, TsscStory.class);
+		return tsscStory;
 	}
 
 }

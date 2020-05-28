@@ -47,8 +47,8 @@ public class TsscGameDelegateImp implements TsscGameDelegate{
 
 	@Override
 	public TsscGame editGame(TsscGame tsscGame) {
-		TsscGame game = rest.patchForObject(URI + "api/games/", tsscGame, TsscGame.class);
-		return game;
+		rest.put(URI + "api/games/", tsscGame, TsscGame.class);
+		return tsscGame;
 	}
 
 	@Override

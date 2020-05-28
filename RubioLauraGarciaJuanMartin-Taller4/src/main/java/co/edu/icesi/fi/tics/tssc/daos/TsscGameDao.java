@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
+import co.edu.icesi.fi.tics.tssc.model.TsscStory;
 
 @Repository
 @Scope("singleton")
@@ -88,6 +89,12 @@ public class TsscGameDao implements ITsscGameDao{
 		String C = "((SELECT time , COUNT(time) FROM TsscTimecontrol time WHERE time.tsscGame.scheduledDate = '" + date + "') = 0)";
 		String jpql = A + "AND " + B + "OR " + C;
 		return entityManager.createQuery(jpql, Object[].class).getResultList();
+	}
+	
+	@Override
+	public List<TsscGame> findAll() {
+		String jpql = "SELECT a FROM TsscGame a";
+		return 	entityManager.createQuery(jpql, TsscGame.class).getResultList();
 	}
 
 }

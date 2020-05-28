@@ -43,9 +43,10 @@ public class TsscTopicRestController {
 		topicService.delete(topic);
 	}
 	
-	@RequestMapping(value ="/api/topics/", method = RequestMethod.PATCH)
+	@RequestMapping(value ="/api/topics-edit/", method = RequestMethod.PUT)
 	public TsscTopic update(@RequestBody TsscTopic topic) {
 		try {
+			System.out.println(topic.getName() + " Rest chistoso");
 			return topicService.editTopic(topic);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

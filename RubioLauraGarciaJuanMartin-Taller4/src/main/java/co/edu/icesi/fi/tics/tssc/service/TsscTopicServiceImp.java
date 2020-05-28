@@ -6,16 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.edu.icesi.fi.tics.tssc.daos.ITsscTopicDao;
+import co.edu.icesi.fi.tics.tssc.daos.TsscTopicDao;
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
 import co.edu.icesi.fi.tics.tssc.repository.TsscTopicRepository;
 @Service
 public class TsscTopicServiceImp implements TsscTopicService {
 
-	TsscTopicRepository topicRepository;
+	ITsscTopicDao topicDao;
 
 	@Autowired
-	public TsscTopicServiceImp(TsscTopicRepository topicRepository) {
-		this.topicRepository = topicRepository;
+	public TsscTopicServiceImp(ITsscTopicDao topicDao) {
+		this.topicDao = topicDao;
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class TsscTopicServiceImp implements TsscTopicService {
 		} else if (newTopic.getDefaultGroups() <= 0) {
 			throw new Exception("InvalidDefaultGroupsException");
 		} else {
-			topicRepository.save(newTopic);
+			topicDao.save(newTopic);
 			return newTopic;
 		}
 	}
@@ -36,36 +38,36 @@ public class TsscTopicServiceImp implements TsscTopicService {
 	@Override
 	@Transactional
 	public TsscTopic editTopic(TsscTopic newTopic) throws Exception {
-		TsscTopic finded = topicRepository.findById(newTopic.getId()).get();
-		if(finded == null) {
+		if(newTopic == null) {
 			throw new Exception("Topic does not exists");
-		} else if(finded.getDefaultSprints() <= 0) {
+		} else if(newTopic.getDefaultSprints() <= 0) {
 			throw new Exception("InvalidDefaultSprintsException");
-		} else if(finded.getDefaultGroups() <= 0) {
+		} else if(newTopic.getDefaultGroups() <= 0) {
 			throw new Exception("InvalidDefaultGroupsException");
 		} else {
-			topicRepository.save(finded);
-			return finded;
+			System.out.println(newTopic.getName() + " Service");
+			topicDao.update(newTopic);
+			return newTopic;
 		}
 	}
 
 	@Override
 	public Iterable<TsscTopic> findAll() {
 		// TODO Auto-generated method stub
-		return topicRepository.findAll();
+		return topicDao.findAll();
 	}
 
 	@Override
 	public Optional<TsscTopic> findById(Long id) {
 		// TODO Auto-generated method stub
-		return topicRepository.findById(id);
+		return Optional.of(topicDao.findById(id));
 	}
 
 	@Override
 	@Transactional
 	public void delete(TsscTopic topic) {
 		// TODO Auto-generated method stub
-		topicRepository.delete(topic);
+		topicDao.delete(topic);
 	}
 
 }

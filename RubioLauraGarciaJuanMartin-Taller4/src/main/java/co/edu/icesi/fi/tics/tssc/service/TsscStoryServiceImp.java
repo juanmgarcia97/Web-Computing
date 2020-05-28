@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.edu.icesi.fi.tics.tssc.daos.ITsscGameDao;
+import co.edu.icesi.fi.tics.tssc.daos.ITsscStoryDao;
+import co.edu.icesi.fi.tics.tssc.daos.TsscStoryDao;
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
 import co.edu.icesi.fi.tics.tssc.repository.TsscGameRepository;
@@ -13,13 +16,13 @@ import co.edu.icesi.fi.tics.tssc.repository.TsscStoryRepository;
 @Service
 public class TsscStoryServiceImp implements TsscStoryService{
 
-	TsscStoryRepository storyRepository;
-	TsscGameRepository gameRepository;
+	ITsscStoryDao storyDao;
+	ITsscGameDao gameDao;
 	
 	@Autowired
-	public TsscStoryServiceImp(TsscStoryRepository storyRepository, TsscGameRepository gameRepository) {
-		this.storyRepository = storyRepository;
-		this.gameRepository = gameRepository;
+	public TsscStoryServiceImp(ITsscStoryDao storyDao, ITsscGameDao gameDao) {
+		this.storyDao = storyDao;
+		this.gameDao = gameDao;
 	}
 	
 	@Override
@@ -34,7 +37,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 		} else if (newStory.getPriority().intValue() <= 0) {
 			throw new Exception("InvalidNumberPriorityException");
 		} else {
-			storyRepository.save(newStory);
+			storyDao.save(newStory);
 			return newStory;
 		}
 	}
@@ -52,19 +55,18 @@ public class TsscStoryServiceImp implements TsscStoryService{
 			throw new Exception("InvalidNumberInitialSprintsException");
 		} else if (newStory.getPriority().intValue() <= 0) {
 			throw new Exception("InvalidNumberPriorityException");
-		} else if(storyRepository.findById(newStory.getTsscGame().getId()) == null){
+		} else if(storyDao.findById(newStory.getTsscGame().getId()) == null){
 			throw new Exception("InvalidTopicException");
 		} else {
 			newStory.setTsscGame(game);
-			storyRepository.save(newStory);
+			storyDao.save(newStory);
 			return newStory;
 		}
 	}
 
 	@Override
 	@Transactional
-	public TsscStory editStory(TsscStory newStory) throws Exception {
-		TsscStory story = storyRepository.findById(newStory.getId()).get();
+	public TsscStory editStory(TsscStory story) throws Exception {
 		if (story == null) {
 			throw new Exception("NullPointerException");
 		} else if (story.getBusinessValue().intValue() <= 0) {
@@ -74,7 +76,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 		} else if (story.getPriority().intValue() <= 0) {
 			throw new Exception("InvalidNumberPriorityException");
 		} else {
-			storyRepository.save(story);
+			storyDao.update(story);
 			return story;
 		}
 	}
@@ -82,7 +84,7 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	@Override
 	@Transactional
 	public TsscStory editStoryGame(TsscStory newStory, TsscGame game) throws Exception {
-		TsscStory story = storyRepository.findById(newStory.getId()).get();
+		TsscStory story = storyDao.findById(newStory.getId());
 		if (story == null) {
 			throw new Exception("NullPointerException");
 		} else if (game == null) {
@@ -93,11 +95,11 @@ public class TsscStoryServiceImp implements TsscStoryService{
 			throw new Exception("InvalidNumberInitialSprintsException");
 		} else if (story.getPriority().intValue() <= 0) {
 			throw new Exception("InvalidNumberPriorityException");
-		} else if(storyRepository.findById(story.getTsscGame().getId()) == null){
+		} else if(storyDao.findById(story.getTsscGame().getId()) == null){
 			throw new Exception("InvalidTopicException");
 		} else {
 			newStory.setTsscGame(game);
-			storyRepository.save(story);
+			storyDao.save(story);
 			return story;
 		}
 	}
@@ -105,20 +107,20 @@ public class TsscStoryServiceImp implements TsscStoryService{
 	@Override
 	public Iterable<TsscStory> findAll() {
 		// TODO Auto-generated method stub
-		return storyRepository.findAll();
+		return storyDao.findAll();
 	}
 
 	@Override
 	public Optional<TsscStory> findById(Long id) {
 		// TODO Auto-generated method stub
-		return storyRepository.findById(id);
+		return Optional.of(storyDao.findById(id));
 	}
 
 	@Override
 	@Transactional
 	public void delete(TsscStory story) {
 		// TODO Auto-generated method stub
-		storyRepository.delete(story);
+		storyDao.delete(story);
 	}
 
 	@Override

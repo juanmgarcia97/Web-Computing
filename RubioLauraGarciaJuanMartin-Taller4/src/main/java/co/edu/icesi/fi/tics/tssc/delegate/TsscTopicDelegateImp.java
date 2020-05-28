@@ -37,7 +37,8 @@ public class TsscTopicDelegateImp implements TsscTopicDelegate{
 
 	@Override
 	public void editTopic(TsscTopic entity) {
-		rest.patchForObject(URI + "api/topics/", entity, TsscTopic.class);
+		System.out.println(entity.getName() + "Delegate chistoso");
+		rest.put(URI + "api/topics-edit/", entity, TsscTopic.class);
 	}
 
 	@Override

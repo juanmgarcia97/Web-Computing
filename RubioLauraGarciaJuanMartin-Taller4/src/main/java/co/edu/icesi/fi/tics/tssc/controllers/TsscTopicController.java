@@ -74,7 +74,8 @@ public class TsscTopicController {
 				return "/topics/update-topic";
 			} else {
 				try {
-					topicDelegate.saveTopic(topic);
+					System.out.println(topic.getName() + "Controlador chistoso");
+					topicDelegate.editTopic(topic);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

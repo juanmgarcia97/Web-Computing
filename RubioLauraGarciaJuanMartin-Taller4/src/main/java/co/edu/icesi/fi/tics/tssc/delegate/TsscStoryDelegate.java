@@ -6,7 +6,7 @@ public interface TsscStoryDelegate {
 
 	Iterable<TsscStory> findAll();
 	TsscStory saveStory(TsscStory tsscGame);
-	TsscStory findById(int id);
+	TsscStory findById(long id);
 	void delete(TsscStory tsscGame);
 	TsscStory editStory(TsscStory tsscGame);
 }

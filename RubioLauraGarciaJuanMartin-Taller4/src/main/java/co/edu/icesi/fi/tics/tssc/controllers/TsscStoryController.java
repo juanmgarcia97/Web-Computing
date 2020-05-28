@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.edu.icesi.fi.tics.tssc.delegate.TsscGameDelegate;
+import co.edu.icesi.fi.tics.tssc.delegate.TsscStoryDelegate;
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
-import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.service.TsscGameService;
 import co.edu.icesi.fi.tics.tssc.service.TsscStoryService;
 import co.edu.icesi.fi.tics.tssc.validations.TsscGameValidation;
@@ -26,26 +27,26 @@ import co.edu.icesi.fi.tics.tssc.validations.TsscStoryValidation;
 @Controller
 public class TsscStoryController {
 
-	TsscStoryService storyService;
+	TsscStoryDelegate storyDelegate;
 
-	TsscGameService gameService;
+	TsscGameDelegate gameDelegate;
 
 	@Autowired
-	public TsscStoryController(TsscStoryService storyService, TsscGameService gameService) {
-		this.storyService = storyService;
-		this.gameService = gameService;
+	public TsscStoryController(TsscStoryDelegate storyDelegate, TsscGameDelegate gameDelegate) {
+		this.storyDelegate = storyDelegate;
+		this.gameDelegate = gameDelegate;
 	}
 
 	@GetMapping("/stories")
 	public String indexStory(Model model) {
-		model.addAttribute("stories", storyService.findAll());
+		model.addAttribute("stories", storyDelegate.findAll());
 		return "/stories/index";
 	}
 
 	@GetMapping("/stories/add")
 	public String addStory(Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
-		model.addAttribute("games", gameService.findAll());
+		model.addAttribute("games", gameDelegate.findAll());
 		return "stories/add-story";
 	}
 
@@ -54,16 +55,13 @@ public class TsscStoryController {
 			@RequestParam(value = "action", required = true) String action, Model model) {
 		if (!action.equals("Cancelar")) {
 			if (bindingResult.hasErrors()) {
-				model.addAttribute("games", gameService.findAll());
+				model.addAttribute("games", gameDelegate.findAll());
 				return "stories/add-story";
 			} else {
 				try {
-					TsscGame game = story.getTsscGame();
-					if (game == null) {
-						storyService.saveStory(story);
-					} else {
-						storyService.saveStoryGame(story, game);
-					}
+					
+						storyDelegate.saveStory(story);
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -76,11 +74,11 @@ public class TsscStoryController {
 
 	@GetMapping("/stories/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Optional<TsscStory> story = storyService.findById(id);
+		TsscStory story = storyDelegate.findById(id);
 		if (story == null)
 			throw new IllegalArgumentException("Invalid story Id:" + id);
-		model.addAttribute("tsscStory", story.get());
-		model.addAttribute("games", gameService.findAll());
+		model.addAttribute("tsscStory", story);
+		model.addAttribute("games", gameDelegate.findAll());
 		return "stories/update-story";
 	}
 
@@ -89,16 +87,13 @@ public class TsscStoryController {
 			@PathVariable("id") long id, @RequestParam(value = "action", required = true) String action, Model model) {
 		if (action != null && !action.equals("Cancelar")) {
 			if (bindingResult.hasErrors()) {
-				model.addAttribute("games", gameService.findAll());
+				model.addAttribute("games", gameDelegate.findAll());
 				return "stories/update-story";
 			} else {
 				try {
-					TsscGame game = story.getTsscGame();
-					if (game == null) {
-						storyService.saveStory(story);
-					} else {
-						storyService.saveStoryGame(story, game);
-					}
+
+					storyDelegate.editStory(story);
+
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -111,9 +106,8 @@ public class TsscStoryController {
 
 	@GetMapping("/stories/del/{id}")
 	public String deleteStory(@PathVariable("id") long id) {
-		TsscStory story = storyService.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid story Id:" + id));
-		storyService.delete(story);
+		TsscStory story = storyDelegate.findById(id);
+		storyDelegate.delete(story);
 		return "redirect:/stories/";
 	}
 

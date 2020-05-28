@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.edu.icesi.fi.tics.tssc.daos.ITsscGameDao;
+import co.edu.icesi.fi.tics.tssc.daos.ITsscTopicDao;
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
 import co.edu.icesi.fi.tics.tssc.model.TsscTimecontrol;
@@ -17,13 +19,13 @@ import co.edu.icesi.fi.tics.tssc.repository.TsscTopicRepository;
 @Service
 public class TsscGameServiceImp implements TsscGameService {
 
-	TsscGameRepository gameRepository;
-	TsscTopicRepository topicRepository;
+	ITsscGameDao gameDao;
+	ITsscTopicDao topicDao;
 
 	@Autowired
-	public TsscGameServiceImp(TsscGameRepository gameRepository, TsscTopicRepository topicRepository) {
-		this.gameRepository = gameRepository;
-		this.topicRepository = topicRepository;
+	public TsscGameServiceImp(ITsscGameDao gameDao, ITsscTopicDao topicDao) {
+		this.gameDao = gameDao;
+		this.topicDao = topicDao;
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class TsscGameServiceImp implements TsscGameService {
 		} else if (newGame.getNGroups() <= 0) {
 			throw new Exception("InvalidNumberGroupsException");
 		} else {
-			gameRepository.save(newGame);
+			gameDao.save(newGame);
 			return newGame;
 		}
 	}
@@ -54,23 +56,22 @@ public class TsscGameServiceImp implements TsscGameService {
 			throw new Exception("Topic does not exists");
 		}else {
 			newGame.setTsscTopic(topic);
-			gameRepository.save(newGame);
+			gameDao.save(newGame);
 			return newGame;
 		}
 	}
 
 	@Override
 	@Transactional
-	public TsscGame editGame(TsscGame newGame) throws Exception {
-		TsscGame game = gameRepository.findById(newGame.getId()).get();
+	public TsscGame editGame(TsscGame game) throws Exception {
 		if (game == null) {
 			throw new Exception("Game does not exists");
-		} else if (game.getNSprints() >= 0) {
+		} else if (game.getNSprints() <= 0) {
 			throw new Exception("InvalidNumberSprintsException");
-		} else if (game.getNGroups() >= 0) {
+		} else if (game.getNGroups() <= 0) {
 			throw new Exception("InvalidNumberGroupsException");
 		} else {
-			gameRepository.save(game);
+			gameDao.update(game);
 			return game;
 		}
 	}
@@ -86,7 +87,7 @@ public class TsscGameServiceImp implements TsscGameService {
 			throw new Exception("InvalidNumberSprintsException");
 		} else if (newGame.getNGroups() <= 0) {
 			throw new Exception("InvalidNumberGroupsException");
-		} else if (topicRepository.findById(topic.getId()) == null) {
+		} else if (topicDao.findById(topic.getId()) == null) {
 			throw new Exception("InvalidTopicException");
 		} else {
 			if (topic.getTsscStories() == null) {
@@ -99,7 +100,7 @@ public class TsscGameServiceImp implements TsscGameService {
 				newGame.setTsscTopic(topic);
 				newGame.setTsscStories(stories);
 				newGame.setTsscTimecontrol(times);
-				gameRepository.save(newGame);
+				gameDao.save(newGame);
 				return newGame;
 			}
 		}
@@ -108,20 +109,20 @@ public class TsscGameServiceImp implements TsscGameService {
 	@Override
 	public Iterable<TsscGame> findAll() {
 		// TODO Auto-generated method stub
-		return gameRepository.findAll();
+		return gameDao.findAll();
 	}
 
 	@Override
 	public Optional<TsscGame> findById(Long id) {
 		// TODO Auto-generated method stub
-		return gameRepository.findById(id);
+		return Optional.of(gameDao.findById(id));
 	}
 
 	@Override
 	@Transactional
 	public void delete(TsscGame game) {
 		// TODO Auto-generated method stub
-		gameRepository.delete(game);
+		gameDao.delete(game);
 	}
 
 	@Override

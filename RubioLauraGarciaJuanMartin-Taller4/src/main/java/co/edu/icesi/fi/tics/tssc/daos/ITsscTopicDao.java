@@ -10,6 +10,7 @@ public interface ITsscTopicDao {
 	public void update(TsscTopic entity);
 	public void delete(TsscTopic entity);
 	public TsscTopic findById(long id);
+	public List<TsscTopic> findAll();
 	public List<TsscTopic> findByName(String name);
 	public List<TsscTopic> findByDescription(String description);
 }

@@ -44,7 +44,7 @@ public class TsscGameRestController {
 			if (topic == null) {
 				return gameService.saveGame(game);
 			} else {
-				return gameService.saveGame2(game, topic);
+				return gameService.saveGameTopic(game, topic);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,10 +52,10 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@RequestMapping(value = "/api/games/", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/api/games/", method = RequestMethod.PUT)
 	public TsscGame editGame(@RequestBody TsscGame game) {
-//		Todavia no se si es necesario este método
 		try {
+			
 			return gameService.editGame(game);
 		} catch (Exception e) {
 			e.printStackTrace();

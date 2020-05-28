@@ -26,6 +26,7 @@ public class TsscTopicDao implements ITsscTopicDao{
 	@Override
 	public void update(TsscTopic entity) {
 		// TODO Auto-generated method stub
+		System.out.println(entity.getName() + " Dao chistoso");
 		entityManager.merge(entity);
 	}
 
@@ -52,6 +53,13 @@ public class TsscTopicDao implements ITsscTopicDao{
 		String jpql = "SELECT a FROM TsscTopic a WHERE a.description = '" + description + "'";
 		return entityManager.createQuery(jpql, TsscTopic.class).getResultList();
 	}
+	
+	@Override
+	public List<TsscTopic> findAll() {
+		String jpql = "SELECT a FROM TsscTopic a";
+		return 	entityManager.createQuery(jpql, TsscTopic.class).getResultList();
+	}
+
 
 
 }

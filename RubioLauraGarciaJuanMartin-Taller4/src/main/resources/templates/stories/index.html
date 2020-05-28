@@ -28,12 +28,9 @@
 								<th>Descripcion</th>
 								<th>Sprint inicial</th>
 								<th>Prioridad</th>
-								<th>Tema</th>
 								<th>Juego</th>
 								<th>Editar</th>
 								<th>Borrar</th>
-								<th>Editar juego</th>
-								<th sec:authorize="hasRole('superAdmin')">Editar tema</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -42,9 +39,6 @@
 								<td class="text-info" th:text="${story.description}"></td>
 								<td class="text-info" th:text="${story.initialSprint}"></td>
 								<td class="text-info" th:text="${story.priority}"></td>
-								<td><span th:if=${storytsscTopic!=null}><a
-										class="text-info" th:text="${story.tsscTopic.name}"></a></span><span
-									th:if=${story.tsscTopic==null}><a class="text-info">Ningun tema</a></span></td>
 								<td><span th:if=${story.tsscGame!=null}><a
 										class="text-info" th:text="${story.tsscGame.name}"></a></span><span
 									th:if=${story.tsscGame==null}><a class="text-info">Ningun juego</a></span></td>
@@ -56,10 +50,6 @@
 										th:href="@{/games/edit/{id}(id=${story.tsscGame.id})}"
 										class="btn btn-primary"><i class="fas fa-puzzle-piece"></i></a></span><span
 									th:if=${story.tsscGame==null}></span></td>
-								<td sec:authorize="hasRole('superAdmin')"><span th:if=${story.tsscTopic!=null}><a
-										th:href="@{/topics/edit/{id}(id=${story.tsscTopic.id})}"
-										class="btn btn-primary"><i class="fas fa-puzzle-piece"></i></a></span><span
-									th:if=${story.tsscTopic==null}></span></td>
 							</tr>
 						</tbody>
 					</table>

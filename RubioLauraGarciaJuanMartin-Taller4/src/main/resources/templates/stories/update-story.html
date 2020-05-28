@@ -60,17 +60,6 @@
 							</select> <span th:if="${#fields.hasErrors('tsscGame')}"
 								th:errors="*{tsscGame}"></span>
 						</div>
-						<div class="form-group col-md-6">
-							<label for="tsscTopic" class="col-form-label">Seleccionar
-								tema</label> <select class="form-control-range" th:field="*{tsscTopic}">
-								<option th:value="null">Ningun tema</option>
-								<option th:each="topic : ${topics}" th:value="${topic.id}"
-									class="form-control" th:text="${topic.name}"
-									th:selected="${tsscStory.tsscTopic=topic}"></option>
-
-							</select> <span th:if="${#fields.hasErrors('tsscTopic')}"
-								th:errors="*{tsscTopic}"></span>
-						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-4 mt-3">
