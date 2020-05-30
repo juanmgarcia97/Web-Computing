@@ -106,7 +106,6 @@ class TsscGameServiceTest {
 			when(gameService.saveGame(game)).thenReturn(game);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			fail();
 		}
 		assertTrue(game.getNGroups() > 0);
 		assertTrue(game.getNSprints() > 0);
@@ -247,7 +246,6 @@ class TsscGameServiceTest {
 				when(gameService.saveGame2(game, topic)).thenReturn(game);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				fail();
 			}
 			assertTrue(game.getNGroups() > 0);
 			assertTrue(game.getNSprints() > 0);

@@ -22,14 +22,9 @@ public final static String URI = "http://localhost:8080/";
 	@Override
 	public Iterable<TsscStory> findAll() {
 		TsscStory[] stories = rest.getForObject(URI + "api/stories/", TsscStory[].class);
-		List<TsscStory> sts;
-		try {
-			sts = Arrays.asList(stories);
-			return sts;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		List<TsscStory> sts = Arrays.asList(stories);
+		return sts;
+		
 	}
 	
 	@Override
