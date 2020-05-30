@@ -8,9 +8,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url" value="jdbc:h2:~/test" />
-		<property name="username" value="sa" />
+		<property name="driverClassName" value="org.postgres.Driver" />
+		<property name="url" value="jdbc:postgres:~/test" />
+		<property name="username" value="postgres" />
 		<property name="password" value="" />
 	</bean>
 

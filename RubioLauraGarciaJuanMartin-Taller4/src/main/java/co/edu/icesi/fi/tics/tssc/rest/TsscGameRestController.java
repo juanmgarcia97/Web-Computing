@@ -54,9 +54,13 @@ public class TsscGameRestController {
 	
 	@RequestMapping(value = "/api/games/", method = RequestMethod.PUT)
 	public TsscGame editGame(@RequestBody TsscGame game) {
+		TsscTopic topic = game.getTsscTopic();
 		try {
-			
-			return gameService.editGame(game);
+			if (topic == null) {
+				return gameService.editGame(game);
+			} else {
+				return gameService.editGameTopic(game, topic);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

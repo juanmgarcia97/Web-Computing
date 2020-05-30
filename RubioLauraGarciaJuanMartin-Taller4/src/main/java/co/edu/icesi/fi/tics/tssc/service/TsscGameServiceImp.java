@@ -75,6 +75,23 @@ public class TsscGameServiceImp implements TsscGameService {
 			return game;
 		}
 	}
+	
+	@Transactional
+	public TsscGame editGameTopic(TsscGame newGame, TsscTopic topic) throws Exception {
+		if (newGame == null) {
+			throw new Exception("Game does not exists");
+		} else if (newGame.getNSprints() <= 0) {
+			throw new Exception("InvalidNumberSprintsException");
+		} else if (newGame.getNGroups() <= 0) {
+			throw new Exception("InvalidNumberGroupsException");
+		} else if(topic == null){
+			throw new Exception("Topic does not exists");
+		}else {
+			newGame.setTsscTopic(topic);
+			gameDao.update(newGame);
+			return newGame;
+		}
+	}
 
 	@Override
 	@Transactional

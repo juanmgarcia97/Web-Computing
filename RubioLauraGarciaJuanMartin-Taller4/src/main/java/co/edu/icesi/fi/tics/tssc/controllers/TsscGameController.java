@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.fi.tics.tssc.delegate.TsscGameDelegate;
+import co.edu.icesi.fi.tics.tssc.delegate.TsscTopicDelegate;
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
 import co.edu.icesi.fi.tics.tssc.model.TsscStory;
 import co.edu.icesi.fi.tics.tssc.model.TsscTopic;
@@ -29,12 +30,12 @@ public class TsscGameController {
 
 	TsscGameDelegate gameDelegate;
 
-	TsscTopicService topicService;
+	TsscTopicDelegate topicDelegate;
 
 	@Autowired
-	public TsscGameController(TsscGameDelegate gameDelegate, TsscTopicService topicService) {
+	public TsscGameController(TsscGameDelegate gameDelegate, TsscTopicDelegate topicDelegate) {
 		this.gameDelegate = gameDelegate;
-		this.topicService = topicService;
+		this.topicDelegate = topicDelegate;
 		;
 	}
 
@@ -47,7 +48,7 @@ public class TsscGameController {
 	@GetMapping("/games/add")
 	public String addGame(Model model) {
 		model.addAttribute("tsscGame", new TsscGame());
-		model.addAttribute("topics", topicService.findAll());
+		model.addAttribute("topics", topicDelegate.findAll());
 		return "/games/add-game";
 	}
 
@@ -56,7 +57,7 @@ public class TsscGameController {
 			@RequestParam(value = "action", required = true) String action, Model model) {
 		if (!action.equals("Cancelar")) {
 			if (bindingResult.hasErrors()) {
-				model.addAttribute("topics", topicService.findAll());
+				model.addAttribute("topics", topicDelegate.findAll());
 				return "games/add-game";
 			} else {
 				try {
@@ -78,7 +79,7 @@ public class TsscGameController {
 		if (game == null)
 			throw new IllegalArgumentException("Invalid game Id:" + id);
 		model.addAttribute("tsscGame", game);
-		model.addAttribute("topics", topicService.findAll());
+		model.addAttribute("topics", topicDelegate.findAll());
 		return "games/update-game";
 	}
 
@@ -87,7 +88,7 @@ public class TsscGameController {
 			@PathVariable("id") long id, @RequestParam(value = "action", required = true) String action, Model model) {
 		if (action != null && !action.equals("Cancel")) {
 			if (bindingResult.hasErrors()) {
-				model.addAttribute("topics", topicService.findAll());
+				model.addAttribute("topics", topicDelegate.findAll());
 				return "games/update-game";
 			} else {
 				try {

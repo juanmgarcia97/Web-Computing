@@ -2,6 +2,10 @@ package co.edu.icesi.fi.tics.tssc.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
@@ -27,6 +31,7 @@ public class TsscTimecontrol implements Serializable {
 	private BigDecimal intervalRunning;
 
 	@Column(name = "LAST_PLAY_TIME")
+	@DateTimeFormat(iso = ISO.TIME)
 	private LocalTime lastPlayTime;
 
 	private String name;
@@ -43,7 +48,6 @@ public class TsscTimecontrol implements Serializable {
 	@Column(name = "TC_TYPE")
 	private String type;
 
-	// bi-directional many-to-one association to TsscTimeInterval
 	@OneToMany(mappedBy = "tsscTimecontrol")
 	private List<TsscTimeInterval> tsscTimeIntervals;
 

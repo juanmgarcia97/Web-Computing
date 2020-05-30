@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.fi.tics.tssc.daos.ITsscTimecontrolDao;
 import co.edu.icesi.fi.tics.tssc.model.TsscGame;
@@ -20,6 +21,7 @@ public class TsscTimecontrolServiceImp implements TsscTimecontrolService{
 	}
 	
 	@Override
+	@Transactional
 	public TsscTimecontrol saveTime(TsscTimecontrol newTime) {
 		// TODO Auto-generated method stub
 		timeDao.save(newTime);
@@ -27,6 +29,7 @@ public class TsscTimecontrolServiceImp implements TsscTimecontrolService{
 	}
 
 	@Override
+	@Transactional
 	public TsscTimecontrol editTime(TsscTimecontrol newTime) {
 		// TODO Auto-generated method stub
 		timeDao.update(newTime);
@@ -46,12 +49,14 @@ public class TsscTimecontrolServiceImp implements TsscTimecontrolService{
 	}
 
 	@Override
+	@Transactional
 	public void delete(TsscTimecontrol time) {
 		// TODO Auto-generated method stub
 		timeDao.delete(time);
 	}
 
 	@Override
+	@Transactional
 	public TsscTimecontrol saveTimeGame(TsscTimecontrol newTime, TsscGame game) {
 		if(game != null) {
 			newTime.setTsscGame(game);
@@ -63,6 +68,7 @@ public class TsscTimecontrolServiceImp implements TsscTimecontrolService{
 	}
 
 	@Override
+	@Transactional
 	public TsscTimecontrol editTimeGame(TsscTimecontrol newTime, TsscGame game) {
 		if(game != null) {
 			newTime.setTsscGame(game);
@@ -71,12 +77,6 @@ public class TsscTimecontrolServiceImp implements TsscTimecontrolService{
 		} else {
 			return editTime(newTime);
 		}
-	}
-
-	@Override
-	public TsscGame getGame(TsscTimecontrol time) {
-		// TODO Auto-generated method stub
-		return time.getTsscGame();
 	}
 
 }

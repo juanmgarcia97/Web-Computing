@@ -48,18 +48,17 @@ public class TsscTimecontrolRestController {
 	
 	@RequestMapping(value = "/api/times/", method = RequestMethod.PUT)
 	public TsscTimecontrol editTime(@RequestBody TsscTimecontrol time) {
+		TsscGame game = time.getTsscGame();
 		try {
-			
-			return timeService.editTime(time);
+			if (game == null) {
+				return timeService.editTime(time);
+			} else {
+				return timeService.editTimeGame(time, game);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	@RequestMapping(value = "/api/times/game/", method = RequestMethod.GET)
-	public TsscGame getGames(@RequestBody TsscTimecontrol time) {
-		return timeService.getGame(time);
 	}
 	
 	@RequestMapping(value = "/api/times/{id}", method = RequestMethod.DELETE)

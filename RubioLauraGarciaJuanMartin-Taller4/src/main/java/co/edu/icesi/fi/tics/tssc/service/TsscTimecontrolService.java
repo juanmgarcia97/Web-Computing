@@ -12,7 +12,6 @@ public interface TsscTimecontrolService {
 	TsscTimecontrol editTime(TsscTimecontrol newTime);
 	TsscTimecontrol editTimeGame(TsscTimecontrol newTime, TsscGame game);
 	Iterable<TsscTimecontrol> findAll();
-	TsscGame getGame(TsscTimecontrol time);
 	Optional<TsscTimecontrol> findById(Long id);
 	void delete(TsscTimecontrol time);
 }

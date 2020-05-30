@@ -15,6 +15,7 @@ public interface TsscGameService {
 	TsscGame saveGame(TsscGame newGame) throws Exception;
 	TsscGame saveGameTopic(TsscGame newGame, TsscTopic topic) throws Exception;
 	TsscGame editGame(TsscGame newGame) throws Exception;
+	TsscGame editGameTopic(TsscGame newGame, TsscTopic topic) throws Exception;
 	TsscGame saveGame2(TsscGame newGame, TsscTopic topic) throws Exception;
 	Iterable<TsscGame> findAll();
 	Optional<TsscGame> findById(Long id);
