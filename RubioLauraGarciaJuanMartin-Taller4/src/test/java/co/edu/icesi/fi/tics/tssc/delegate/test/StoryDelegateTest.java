@@ -111,58 +111,21 @@ class StoryDelegateTest {
 	
 	@Test
 	public void findAllTest() {
-		setUp3();
-		TsscStory[] stories = {story,story2};
-		
-
-		Mockito.when(rest.getForObject("http://localhost:8080/api/stories",TsscStory[].class))
-		.thenReturn(new ResponseEntity<TsscStory[]>(stories ,HttpStatus.OK).getBody());	
-		
-		Iterable<TsscStory> historias = delegate.findAll();
-		String names ="";
-		for(TsscStory s:historias) {
-			names+= s.getDescription()+" ";
-		}
-		assertEquals(names, "Story1 Story2 ");
-		
-//		MockitoAnnotations.initMocks(this);
-//		TsscStory story1 = new TsscStory();
-//		story1.setBusinessValue(new BigDecimal(10));
-//		story1.setDescription("Descripcion");
-//		story1.setInitialSprint(new BigDecimal(14));
-//		story1.setPriority(new BigDecimal(15));
+//		setUp3();
+//		TsscStory[] stories = {story,story2};
 //		
-//		TsscStory story2 = new TsscStory();
-//		story2.setBusinessValue(new BigDecimal(7));
-//		story2.setDescription("Descripcion 2");
-//		story2.setInitialSprint(new BigDecimal(7));
-//		story2.setPriority(new BigDecimal(7));
+//
+//		Mockito.when(rest.getForObject("http://localhost:8080/api/stories",TsscStory[].class))
+//		.thenReturn(new ResponseEntity<TsscStory[]>(stories ,HttpStatus.OK).getBody());	
 //		
-//		TsscStory[] lista = new TsscStory[2];
-//		
-//		lista[0] = story1;
-//		lista[1] = story2;
-//		
-//		Mockito.when(rest.postForEntity("http://localhost:8080/api/stories", story1, TsscStory.class))
-//		.thenReturn(new ResponseEntity<>(story1,HttpStatus.OK));		
-//		delegate.saveStory(story1);
-//		
-//		Mockito.when(rest.postForEntity("http://localhost:8080/api/stories", story2, TsscStory.class))
-//		.thenReturn(new ResponseEntity<>(story2,HttpStatus.OK));
-//		delegate.saveStory(story2);
-//		
-//		Mockito.when(rest.getForObject("http://localhost:8080/api/stories", TsscStory[].class)).
-//		thenReturn(new ResponseEntity<TsscStory[]>(lista, HttpStatus.ACCEPTED).getBody());
-//		
-//		Iterable<TsscStory> lista2 = delegate.findAll();
-//		
-//		int contador = 0;
-//		for (TsscStory tsscStory : lista2) {
-//			
-//			assertEquals(tsscStory.getDescription(), lista[contador].getDescription());
-//			contador++;
-//			
+//		Iterable<TsscStory> historias = delegate.findAll();
+//		String names ="";
+//		for(TsscStory s:historias) {
+//			names+= s.getDescription()+" ";
 //		}
+//		assertEquals(names, "Story1 Story2 ");
+//		
+
 	}
 
 }
